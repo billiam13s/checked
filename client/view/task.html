@@ -1,0 +1,172 @@
+<template name="task">
+
+    <a href="#" class="list-group-item {{listGroupColor}}">
+        <div class="btn-group pull-right">
+            <input type="checkbox" name="delete" checked={{deletedAt}}>
+        </div>
+        {{#if deletedAt}}
+            <del><h5 class="list-group-item-heading">{{title}}</h5></del>
+            <del><em class="list-group-item-text">{{formatTaskDetail detail}}</em></del>
+        {{else}}
+            <h5 class="list-group-item-heading">{{title}}</h5>
+            <em class="list-group-item-text">{{formatTaskDetail detail}}</em>
+        {{/if}}
+    </a>
+
+</template>
+
+
+<template name="taskModal">
+
+    <div class="modal fade" id="modal-task" tabindex="-1" role="dialog" aria-labelledby="modal-label" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form class="" role="form" method="post">
+
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <h4 class="modal-title" id="modal-label">Task Detail</h4>
+                    </div>
+                    <div class="modal-body">
+
+                        <div class="form-group">
+                            <label>Title</label>
+                            <input type="text" class="form-control" name="title" placeholder="task title" value="{{title}}" disabled={{deletedAt}} />
+                        </div>
+
+                        <div class="form-group">
+                            <label>Priority</label>
+                            <select class="form-control" name="priority" disabled={{deletedAt}}>
+                                <option></option>
+                                {{priorityOptions}}
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Detail</label>
+                            <textarea class="form-control" rows="5" name='detail' disabled={{deletedAt}}>{{detail}}</textarea>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <dl class="">
+                                    <dt>Created At</dt>
+                                    <dd>{{formatDate createdAt}}</dd>
+                                </dl>
+                            </div>
+                            <div class="col-xs-6">
+                                {{#if deletedAt}}
+                                <dl class="">
+                                    <dt>Deleted At</dt>
+                                    <dd>{{formatDate deletedAt}}</dd>
+                                </dl>
+                                {{else}}
+                                {{#if updatedAt}}
+                                <dl class="">
+                                    <dt>Updated At</dt>
+                                    <dd>{{formatDate updatedAt}}</dd>
+                                </dl>
+                                {{/if}}
+                                {{/if}}
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        {{#if deletedAt}}
+                        <button type="submit" class="btn btn-primary disabled">Save</button>
+                        {{else}}
+                        <button type="submit" class="btn btn-primary">Save</button>
+                        {{/if}}
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+</template>
+
+
+<template name="deletedTask">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">Deleted Tasks</h3>
+        </div>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Priority</th>
+                    <th>Panel</th>
+                    <th>Detail</th>
+                    <th>Deleted At</th>
+                </tr>
+            </thead>
+            <tbody>
+            {{#each tasks}}
+                {{> deletedTaskEach}}
+            {{/each}}
+            </tbody>
+        </table>
+    </div>
+</template>
+
+
+<template name="deletedTaskEach">
+    <tr class="row-task">
+        <td>{{title}}</td>
+        <td>{{priorityName priority_id}}</td>
+        <td>{{panelName panel_id}}</td>
+        <td>{{formatTaskDetail detail}}</td>
+        <td>{{formatDate deletedAt}}</td>
+    </tr>
+</template>
+
+
+<template name="deletedTaskModal">
+
+    <div class="modal fade" id="modal-task-deleted" tabindex="-1" role="dialog" aria-labelledby="modal-label" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title" id="modal-label">Task Detail</h4>
+                </div>
+                <div class="modal-body">
+
+                    <dl class="dl-horizontal">
+                        <dt>Title</dt>
+                        <dd>{{title}}</dd>
+                    </dl>
+                    <dl class="dl-horizontal">
+                        <dt>Priority</dt>
+                        <dd>{{priorityName priority_id}}</dd>
+                    </dl>
+                    <dl class="dl-horizontal">
+                        <dt>Panel</dt>
+                        <dd>{{panelName panel_id}}</dd>
+                    </dl>
+                    <dl class="dl-horizontal">
+                        <dt>Detail</dt>
+                        <dd>{{detail}}</dd>
+                    </dl>
+                    <dl class="dl-horizontal">
+                        <dt>Deleted At</dt>
+                        <dd>{{formatDate deletedAt}}</dd>
+                    </dl>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="recover btn btn-warning">Recover</button>
+                    <button type="button" class="hard-delete btn btn-danger">Delete Permanently</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</template>

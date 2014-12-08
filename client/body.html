@@ -1,0 +1,35 @@
+<body>
+    {{> nav}}
+
+    <div class="container">
+        <div class="row">
+
+            <div class="col-xs-12 col-sm-3">
+
+                <!--<ul id="sidenav-toggle-list-group" class="list-group visible-xs-block">
+                    <li class="list-group-item">
+                        <button type="button" class="sidenav-toggle" data-toggle="collapse" data-target="#side-nav" aria-expanded="true" aria-controls="side-nav">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        Lists
+                    </li>
+                </ul> -->
+
+                <div id="side-nav" class="list-group collapse in">
+                {{#each panels}}
+                    {{>listGroup}}
+                {{/each}}
+                </div>
+            </div>
+
+            <div class="col-xs-12 col-sm-9"><div id="panel-box"></div></div>
+
+        </div>
+    </div>
+
+    <div id="modal">
+    </div>
+</body>
