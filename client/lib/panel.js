@@ -49,6 +49,17 @@ Template.listGroup.events({
             Blaze.render(Template.panel, $('#panel-box')[0]);
             $('#panel-box').hide();
         }, 500);
+    },
+    "drop": function(event) {
+        taskId = Session.get('dragTaskId');
+        if(taskId) {
+            Session.set('dragTaskId', null);
+            Meteor.call('updateTaskPanel', taskId, this._id);
+        }
+        event.preventDefault();
+    },
+    "dragover": function(event) {
+        event.preventDefault();
     }
 });
 

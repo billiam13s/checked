@@ -27,6 +27,11 @@ Template.task.events({
             else
                 Meteor.call('recoverTask', this._id);
         }
+    },
+    "drag": function(event) {
+    },
+    "dragstart": function(event) {
+        Session.set('dragTaskId', this._id);
     }
 });
 
